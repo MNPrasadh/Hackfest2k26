@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { Home, Clock, Calendar, Mail, Menu, X } from "lucide-react";
@@ -21,6 +21,7 @@ const menuItems = [
     label: "Event Details",
     href: "/event-details",
     isInternal: false,
+    isModal: true,
   },
   {
     icon: <Mail size={18} />,
@@ -32,9 +33,27 @@ const menuItems = [
 
 function MenuBar({ isCollapsed }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isEventDetailsOpen, setIsEventDetailsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleClick = (e, href, isInternal) => {
+  useEffect(() => {
+    if (isEventDetailsOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+    return undefined;
+  }, [isEventDetailsOpen]);
+
+  const handleClick = (e, href, isInternal, isModal) => {
+    if (isModal) {
+      e.preventDefault();
+      setIsEventDetailsOpen(true);
+      setIsMobileMenuOpen(false);
+      return;
+    }
     if (isInternal) {
       if (href === "/") {
         navigate("/");
@@ -81,16 +100,28 @@ function MenuBar({ isCollapsed }) {
           }}
         >
           {menuItems.map((item, index) => {
-            const Component = item.isInternal ? motion.div : motion(Link);
-            const componentProps = item.isInternal
+            const Component = item.isModal
+              ? motion.button
+              : item.isInternal
+                ? motion.div
+                : motion(Link);
+            const componentProps = item.isModal
               ? {
-                  onClick: (e) => handleClick(e, item.href, item.isInternal),
+                  onClick: (e) =>
+                    handleClick(e, item.href, item.isInternal, item.isModal),
+                  type: "button",
                   style: { cursor: "pointer" },
                 }
-              : {
-                  to: item.href,
-                  style: { textDecoration: "none" },
-                };
+              : item.isInternal
+                ? {
+                    onClick: (e) =>
+                      handleClick(e, item.href, item.isInternal, item.isModal),
+                    style: { cursor: "pointer" },
+                  }
+                : {
+                    to: item.href,
+                    style: { textDecoration: "none" },
+                  };
 
             return (
               <Component
@@ -173,17 +204,38 @@ function MenuBar({ isCollapsed }) {
                 }}
               >
                 {menuItems.map((item, index) => {
-                  const Component = item.isInternal ? motion.div : motion(Link);
-                  const componentProps = item.isInternal
+                  const Component = item.isModal
+                    ? motion.button
+                    : item.isInternal
+                      ? motion.div
+                      : motion(Link);
+                  const componentProps = item.isModal
                     ? {
                         onClick: (e) =>
-                          handleClick(e, item.href, item.isInternal),
+                          handleClick(
+                            e,
+                            item.href,
+                            item.isInternal,
+                            item.isModal,
+                          ),
+                        type: "button",
                         style: { cursor: "pointer" },
                       }
-                    : {
-                        to: item.href,
-                        style: { textDecoration: "none" },
-                      };
+                    : item.isInternal
+                      ? {
+                          onClick: (e) =>
+                            handleClick(
+                              e,
+                              item.href,
+                              item.isInternal,
+                              item.isModal,
+                            ),
+                          style: { cursor: "pointer" },
+                        }
+                      : {
+                          to: item.href,
+                          style: { textDecoration: "none" },
+                        };
 
                   return (
                     <Component
@@ -221,6 +273,154 @@ function MenuBar({ isCollapsed }) {
         </motion.div>
       )}
 
+      {/* Event Details Modal */}
+      <AnimatePresence>
+        {isEventDetailsOpen && (
+          <motion.div
+            className="event-modal-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsEventDetailsOpen(false)}
+          >
+            <motion.div
+              className="event-modal"
+              initial={{ opacity: 0, y: 20, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.98 }}
+              transition={{ duration: 0.25 }}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Event Guidelines"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="event-modal-header">
+                <div>
+                  <p className="event-modal-eyebrow">Event Details</p>
+                  <h3 className="event-modal-title">Event Guidelines</h3>
+                </div>
+                <button
+                  type="button"
+                  className="event-modal-close"
+                  onClick={() => setIsEventDetailsOpen(false)}
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <div className="event-modal-content">
+                <div className="event-section">
+                  <h4>Participation</h4>
+                  <ul>
+                    <li>Hardware and software solutions are welcome.</li>
+                    <li>Teams must consist of 3–4 participants.</li>
+                  </ul>
+                </div>
+
+                <div className="event-section">
+                  <h4>Registration</h4>
+                  <ul>
+                    <li>
+                      Registration is confirmed only after successful payment.
+                    </li>
+                    <li>The participation fee is ₹3,000 per team.</li>
+                  </ul>
+                </div>
+
+                <div className="event-section">
+                  <h4>Build Policy</h4>
+                  <ul>
+                    <li>
+                      All projects must be built exclusively during the event.
+                    </li>
+                    <li>
+                      Pre-built or previously submitted work is not permitted.
+                    </li>
+                    <li>
+                      Problem statements must align strictly with the assigned
+                      domains.
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="event-section">
+                  <h4>Integrity</h4>
+                  <ul>
+                    <li>Original work is mandatory.</li>
+                    <li>
+                      Plagiarism or policy violations will result in immediate
+                      disqualification.
+                    </li>
+                    <li>
+                      All participants are expected to maintain professional
+                      conduct throughout the event.
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="event-section">
+                  <h4>Evaluation</h4>
+                  <ul>
+                    <li>
+                      All submissions will be reviewed by an expert jury panel.
+                    </li>
+                    <li>The jury’s decision is final and non-negotiable.</li>
+                  </ul>
+                </div>
+
+                <div className="event-section">
+                  <h4>Compliance</h4>
+                  <ul>
+                    <li>
+                      Participants must adhere to all institutional rules and
+                      regulations at all times.
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="event-section">
+                  <h4>Experience & Facilities</h4>
+                  <ul>
+                    <li>Comfortable accommodation will be provided.</li>
+                    <li>
+                      High-speed internet access will be available throughout
+                      the event.
+                    </li>
+                    <li>
+                      Official college transportation may be utilized as
+                      scheduled.
+                    </li>
+                    <li>
+                      Participants are advised to carry all personal and project
+                      essentials.
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="event-section">
+                  <h4>What’s Included</h4>
+                  <ul>
+                    <li>Curated event swags and official T-shirts.</li>
+                    <li>Complimentary meals during the event.</li>
+                    <li>An exclusive DJ Night on Day 1.</li>
+                  </ul>
+                </div>
+
+                <div className="event-section">
+                  <h4>Support</h4>
+                  <ul>
+                    <li>
+                      Dedicated student and staff coordinators will be available
+                      24×7 to assist participants.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <style>{`
         .menu-item {
           display: flex;
@@ -252,6 +452,114 @@ function MenuBar({ isCollapsed }) {
           display: flex;
           align-items: center;
           transition: color 0.2s ease;
+        }
+
+        .event-modal-backdrop {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.65);
+          backdrop-filter: blur(6px);
+          z-index: 3000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 24px;
+        }
+
+        .event-modal {
+          width: min(920px, 100%);
+          max-height: 85vh;
+          overflow: hidden;
+          background: rgba(12, 12, 12, 0.95);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          border-radius: 20px;
+          box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+          padding: 24px;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .event-modal-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          margin-bottom: 16px;
+          position: sticky;
+          top: 0;
+          background: rgba(12, 12, 12, 0.95);
+          padding-bottom: 12px;
+          z-index: 2;
+        }
+
+        .event-modal-eyebrow {
+          font-size: 0.75rem;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: rgba(34, 197, 94, 0.7);
+          margin: 0 0 6px 0;
+        }
+
+        .event-modal-title {
+          margin: 0;
+          font-size: 1.6rem;
+          color: #fff;
+        }
+
+        .event-modal-close {
+          width: 36px;
+          height: 36px;
+          border-radius: 10px;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: rgba(255, 255, 255, 0.04);
+          color: rgba(255, 255, 255, 0.8);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+        }
+
+        .event-modal-content {
+          overflow: auto;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          gap: 16px;
+          padding-right: 6px;
+          max-height: calc(85vh - 110px);
+        }
+
+        .event-modal-content::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        .event-modal-content::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.15);
+          border-radius: 20px;
+        }
+
+        .event-modal-content::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        .event-section {
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 14px;
+          padding: 14px 16px;
+        }
+
+        .event-section h4 {
+          margin: 0 0 8px 0;
+          font-size: 1rem;
+          color: #fff;
+        }
+
+        .event-section ul {
+          margin: 0;
+          padding-left: 18px;
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 0.9rem;
+          line-height: 1.5;
         }
 
         @media (max-width: 900px) {

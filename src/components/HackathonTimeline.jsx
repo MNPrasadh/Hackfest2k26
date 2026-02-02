@@ -182,7 +182,7 @@ const motivationalQuotes = [
   { quote: "Highly valuable in preparing students for real-world IT roles.", author: "Mr.Prabhu Krishnan, Technical Manager" },
   
   { quote: "Remarks from the Mentors", author: "" },
-  { quote: "Students showed strong problem-solving skills and consistent effort.", author: "Dr. JeyGanesh Kumar, MKCE" },
+  { quote: "Students showed strong problem-solving skills and consistent effort.", author: "Dr.K.JeyaGanesh Kumar, MKCE" },
   { quote: "Participants were highly engaged and open to feedback.", author: "Mr. M Jaganath, MKCE" },
 
   { quote: "Hear directly from our coordinators", author: "" },
