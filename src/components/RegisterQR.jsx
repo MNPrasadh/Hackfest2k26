@@ -6,26 +6,26 @@ import qrImage from "./QR.png";
 const juryMembers = [
   {
     name: "Jury Member 1",
-    designation: "Industry Expert",
-    company: "Tech Company",
+    designation: "Revealed Soon",
+    company: "",
     image: null,
   },
   {
     name: "Jury Member 2",
-    designation: "Senior Engineer",
-    company: "Innovation Labs",
+    designation: "Revealed Soon",
+    company: "",
     image: null,
   },
   {
     name: "Jury Member 3",
-    designation: "Tech Lead",
-    company: "Startup Inc",
+    designation: "Revealed Soon",
+    company: "",
     image: null,
   },
   {
     name: "Jury Member 4",
-    designation: "Professor",
-    company: "University",
+    designation: "Revealed Soon",
+    company: "",
     image: null,
   },
 ];
@@ -453,7 +453,7 @@ export default function RegisterQR() {
                         "'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif",
                     }}
                   >
-                    Scan to Register
+                    Click / Scan to Register
                   </p>
                   <p
                     className="text-base font-medium flex items-center justify-center gap-2 group-hover:gap-3 transition-all duration-300"

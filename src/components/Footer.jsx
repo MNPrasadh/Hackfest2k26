@@ -289,15 +289,15 @@ export default function Footer() {
                 <div className="space-y-4">
                   <div>
                     <p className="text-white text-sm leading-relaxed">
-                      From Karur New Bus Stand, get bus to Old Bus Stand → take
-                      the M.Kumarasamy College of Engineering (Thalavapalayam)
-                      <br></br>(Bus No: 1) → get down at MKCE.
+                      From Paramathi Velur, board Local Bus No. 1 and alight at MKCE.
+From Karur Bus Stand, board Bus No. 1 and alight at MKCE.
+                      
                     </p>
                   </div>
                   <div>
                     <p className="text-white text-sm">
                       <span className="font-medium">Own vehicle:</span> Search
-                      "M.Kumarasamy College of Engineering" on Google Maps.
+                      "M. Kumarasamy College of Engineering" on Google Maps.
                     </p>
                   </div>
                 </div>

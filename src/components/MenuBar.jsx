@@ -39,9 +39,22 @@ function MenuBar({ isCollapsed }) {
   useEffect(() => {
     if (isEventDetailsOpen) {
       const originalOverflow = document.body.style.overflow;
+      const originalHtmlOverflow = document.documentElement.style.overflow;
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
       return () => {
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.left = "";
+        document.body.style.right = "";
         document.body.style.overflow = originalOverflow;
+        document.documentElement.style.overflow = originalHtmlOverflow;
+        window.scrollTo(0, scrollY);
       };
     }
     return undefined;
@@ -293,6 +306,8 @@ function MenuBar({ isCollapsed }) {
               aria-modal="true"
               aria-label="Event Guidelines"
               onClick={(e) => e.stopPropagation()}
+              onWheel={(e) => e.stopPropagation()}
+              onTouchMove={(e) => e.stopPropagation()}
             >
               <div className="event-modal-header">
                 <div>
@@ -469,7 +484,9 @@ function MenuBar({ isCollapsed }) {
         .event-modal {
           width: min(920px, 100%);
           max-height: 85vh;
-          overflow: hidden;
+          overflow: auto;
+          overscroll-behavior: contain;
+          -webkit-overflow-scrolling: touch;
           background: rgba(12, 12, 12, 0.95);
           border: 1px solid rgba(255, 255, 255, 0.12);
           border-radius: 20px;
@@ -520,12 +537,10 @@ function MenuBar({ isCollapsed }) {
         }
 
         .event-modal-content {
-          overflow: auto;
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
           gap: 16px;
           padding-right: 6px;
-          max-height: calc(85vh - 110px);
         }
 
         .event-modal-content::-webkit-scrollbar {
