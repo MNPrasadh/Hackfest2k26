@@ -2,92 +2,142 @@ import React from "react";
 import { motion } from "framer-motion";
 import qrImage from "./QR.png";
 
-// Testimonial data
-const testimonials = [
+// Jury Panel data - placeholder images to be replaced later
+const juryMembers = [
   {
-    name: "Asma",
-    college: "K. Ramakrishnan College of Engineering",
-    quote: "It was really good, mentors helped to complete our task.",
+    name: "Jury Member 1",
+    designation: "Industry Expert",
+    company: "Tech Company",
+    image: null,
   },
   {
-    name: "Student",
-    college: "K. Ramakrishnan College of Engineering",
-    quote:
-      "The event was so good and juries helped to improve our project, coordinators were so helpful everytime.",
+    name: "Jury Member 2",
+    designation: "Senior Engineer",
+    company: "Innovation Labs",
+    image: null,
   },
   {
-    name: "Keval",
-    college: "Maharashtra, SRM",
-    quote:
-      "I got to know about this hackathon through SRM College. This college has a very good reputation. MKCE College's hospitality was excellent, and the surroundings here are very good as well.",
+    name: "Jury Member 3",
+    designation: "Tech Lead",
+    company: "Startup Inc",
+    image: null,
   },
   {
-    name: "Sumit",
-    college: "West Bengal, SRM",
-    quote:
-      "I came here to attend the hackathon, and I really liked the environment. The competition was strong, and there was a lot to learn from this experience.",
+    name: "Jury Member 4",
+    designation: "Professor",
+    company: "University",
+    image: null,
   },
 ];
 
-// Testimonial Card Component - Compact version for side panel
-const TestimonialCard = ({ testimonial, index }) => (
+// Premium Jury Card Component - 2x2 Grid Style
+const JuryCard = ({ jury, index }) => (
   <motion.div
-    className="bg-white rounded-xl p-5"
+    className="relative text-center p-7"
     style={{
+      background:
+        "linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0%, rgba(255, 255, 255, 0.015) 100%)",
+      borderRadius: "24px",
+      border: "1px solid rgba(255, 255, 255, 0.08)",
       boxShadow:
-        "0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04)",
-      border: "1px solid rgba(0, 0, 0, 0.04)",
+        "0 0 0 1px rgba(255, 255, 255, 0.02), 0 16px 48px rgba(0, 0, 0, 0.28)",
+      backdropFilter: "blur(8px)",
     }}
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
-    transition={{ delay: 0.1 * index, duration: 0.4 }}
+    transition={{ delay: 0.1 * index, duration: 0.5, ease: "easeOut" }}
     whileHover={{
-      y: -3,
-      boxShadow:
-        "0 12px 40px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04)",
+      background:
+        "linear-gradient(180deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0.02) 100%)",
+      border: "1px solid rgba(212, 175, 55, 0.2)",
     }}
   >
-    {/* Quote Icon */}
-    <div className="mb-3" style={{ color: "#C9A227", opacity: 0.6 }}>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" />
-      </svg>
-    </div>
-
-    {/* Quote Text */}
-    <p
-      className="text-sm leading-relaxed mb-4"
+    {/* Profile Image/Avatar */}
+    <div
+      className="w-16 h-16 mx-auto mb-5 rounded-full overflow-hidden flex items-center justify-center"
       style={{
-        color: "#374151",
-        fontFamily: "'Inter', sans-serif",
-        lineHeight: 1.6,
+        background: jury.image
+          ? "transparent"
+          : "linear-gradient(145deg, rgba(200, 200, 200, 0.18) 0%, rgba(212, 175, 55, 0.12) 100%)",
+        border: "2px solid transparent",
+        borderImage:
+          "linear-gradient(145deg, rgba(200, 200, 200, 0.35), rgba(212, 175, 55, 0.35)) 1",
+        borderImageSlice: 1,
       }}
     >
-      {testimonial.quote}
+      {jury.image ? (
+        <img
+          src={jury.image}
+          alt={jury.name}
+          className="w-full h-full object-cover"
+        />
+      ) : (
+        <span
+          style={{
+            background: "linear-gradient(145deg, #C0C0C0, #D4AF37)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            fontSize: "1.25rem",
+            fontWeight: "600",
+            fontFamily:
+              "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+          }}
+        >
+          {jury.name.split(" ").pop().charAt(0)}
+        </span>
+      )}
+    </div>
+
+    {/* Name - Silver gradient */}
+    <h4
+      style={{
+        background: "linear-gradient(180deg, #E8E8E8 0%, #A8A8A8 100%)",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+        backgroundClip: "text",
+        fontSize: "1rem",
+        fontWeight: "600",
+        fontFamily:
+          "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+        letterSpacing: "-0.01em",
+        marginBottom: "4px",
+      }}
+    >
+      {jury.name}
+    </h4>
+
+    {/* Designation - Gold accent */}
+    <p
+      style={{
+        background: "linear-gradient(180deg, #D4AF37 0%, #C9A227 100%)",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+        backgroundClip: "text",
+        fontSize: "0.75rem",
+        fontWeight: "500",
+        letterSpacing: "0.03em",
+        marginBottom: "2px",
+        fontFamily:
+          "'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif",
+      }}
+    >
+      {jury.designation}
     </p>
 
-    {/* Author Info */}
-    <div className="flex items-center gap-3">
-      <div
-        className="w-8 h-8 rounded-full flex items-center justify-center"
-        style={{
-          background: "linear-gradient(135deg, #C9A227 0%, #D4AF37 100%)",
-        }}
-      >
-        <span className="text-white font-semibold text-xs">
-          {testimonial.name.charAt(0)}
-        </span>
-      </div>
-      <div>
-        <p className="font-semibold text-xs" style={{ color: "#1F2937" }}>
-          {testimonial.name}
-        </p>
-        <p className="text-xs" style={{ color: "#6B7280", fontSize: "10px" }}>
-          {testimonial.college}
-        </p>
-      </div>
-    </div>
+    {/* Company - Muted silver */}
+    <p
+      style={{
+        color: "rgba(192, 192, 192, 0.5)",
+        fontSize: "0.7rem",
+        fontWeight: "400",
+        fontFamily:
+          "'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif",
+      }}
+    >
+      {jury.company}
+    </p>
   </motion.div>
 );
 
@@ -100,217 +150,287 @@ export default function RegisterQR() {
       id="register"
       className="relative overflow-hidden"
       style={{
-        background: "#FAFAFA",
+        background:
+          "radial-gradient(ellipse at 50% 0%, #1A1A1A 0%, #0F0F0F 50%, #080808 100%)",
+        minHeight: "100vh",
       }}
     >
+      {/* Ambient silver/gold light effect - top */}
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-80 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at center top, rgba(212, 175, 55, 0.04) 0%, rgba(192, 192, 192, 0.02) 40%, transparent 70%)",
+        }}
+      />
+
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-20 md:py-28">
+      <div className="max-w-6xl mx-auto px-8 md:px-16 lg:px-24 py-24 md:py-32 relative z-10">
         {/* Header Section */}
         <motion.div
-          className="text-center mb-16 md:mb-20"
-          initial={{ opacity: 0, y: 30 }}
+          className="text-center mb-16 md:mb-24"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
+          {/* Registration Open Badge - #FFF924 */}
           <motion.span
-            className="inline-block px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-widest mb-6"
+            className="inline-block px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.15em] mb-10"
             style={{
-              background: "rgba(201, 162, 39, 0.1)",
-              color: "#B8860B",
-              border: "1px solid rgba(201, 162, 39, 0.2)",
+              background: "#FFF924",
+              color: "#0A0A0A",
+              fontFamily:
+                "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+              boxShadow:
+                "0 0 30px rgba(255, 249, 36, 0.3), 0 0 60px rgba(255, 249, 36, 0.1)",
             }}
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
           >
             Registration Open
           </motion.span>
 
+          {/* Main Heading - Silver gradient */}
           <h2
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl font-semibold mb-6"
             style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              color: "#1F2937",
-              letterSpacing: "-0.02em",
+              background:
+                "linear-gradient(180deg, #FFFFFF 0%, #C0C0C0 50%, #A0A0A0 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              fontFamily:
+                "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+              letterSpacing: "-0.03em",
+              lineHeight: 1.1,
             }}
           >
             Ready to Participate?
           </h2>
 
+          {/* Subheading - Muted silver */}
           <p
-            className="text-lg md:text-xl max-w-2xl mx-auto"
+            className="text-base md:text-lg max-w-xl mx-auto"
             style={{
-              color: "#6B7280",
-              fontFamily: "'Inter', sans-serif",
-              lineHeight: 1.6,
+              color: "rgba(192, 192, 192, 0.6)",
+              fontFamily:
+                "'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif",
+              lineHeight: 1.7,
+              fontWeight: "400",
+              letterSpacing: "0.01em",
             }}
           >
-            Join hundreds of innovators at HACKFEST 2K26. Scan the QR code or
-            click to register and be part of something extraordinary.
+            Join innovators at HACKFEST 2K26. Scan to register and be part of
+            something extraordinary.
           </p>
         </motion.div>
 
-        {/* Two Column Layout: QR + Testimonials */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          {/* QR Code Section */}
-          <motion.div
-            className="flex flex-col items-center lg:items-start"
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.a
-              href={qrUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block no-underline"
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
+        {/* Structural Frame */}
+        <div
+          className="relative"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0%, rgba(255, 255, 255, 0.01) 100%)",
+            borderRadius: "32px",
+            border: "1px solid rgba(255, 255, 255, 0.07)",
+            boxShadow:
+              "0 0 0 1px rgba(255, 255, 255, 0.02), 0 28px 80px rgba(0, 0, 0, 0.35)",
+            padding: "28px",
+          }}
+        >
+          <div
+            className="absolute inset-x-6 top-6 h-px"
+            style={{
+              background:
+                "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent)",
+            }}
+          />
+          <div
+            className="absolute inset-x-6 bottom-6 h-px"
+            style={{
+              background:
+                "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent)",
+            }}
+          />
+          <div
+            className="hidden lg:block absolute top-12 bottom-12 left-1/2 w-px"
+            style={{
+              background:
+                "linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.08), transparent)",
+            }}
+          />
+
+          {/* Two Column Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+            {/* QR Code Section */}
+            <motion.div
+              className="flex flex-col items-center"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
             >
-              <div
-                className="bg-white rounded-3xl p-8 md:p-12"
-                style={{
-                  boxShadow:
-                    "0 8px 40px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04)",
-                  border: "1px solid rgba(201, 162, 39, 0.15)",
-                }}
+              <motion.a
+                href={qrUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block no-underline group"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
               >
-                {/* QR Code Container */}
-                <div
-                  className="rounded-2xl overflow-hidden mb-8"
-                  style={{
-                    width: "320px",
-                    height: "320px",
-                    background: "#FFFFFF",
-                    border: "2px solid #E5E7EB",
-                    padding: "12px",
-                  }}
-                >
-                  <img
-                    src={qrImage}
-                    alt="QR Code - Scan to Register"
-                    className="w-full h-full object-contain"
+                {/* QR Container with subtle glow */}
+                <div className="relative p-4">
+                  {/* Ambient glow */}
+                  <div
+                    className="absolute inset-0 rounded-3xl opacity-50 group-hover:opacity-80 transition-opacity duration-500"
                     style={{
-                      imageRendering: "crisp-edges",
-                      filter: "contrast(1.1)",
+                      background:
+                        "radial-gradient(circle at center, rgba(212, 175, 55, 0.1) 0%, rgba(192, 192, 192, 0.05) 50%, transparent 70%)",
+                      filter: "blur(50px)",
                     }}
                   />
+
+                  {/* QR Image Container */}
+                  <div
+                    className="relative rounded-3xl overflow-hidden"
+                    style={{
+                      width: "280px",
+                      height: "280px",
+                      background: "#F7F7F7",
+                      padding: "18px",
+                      boxShadow:
+                        "0 0 0 1px rgba(255, 255, 255, 0.12), inset 0 0 0 1px rgba(0, 0, 0, 0.04)",
+                    }}
+                  >
+                    <img
+                      src={qrImage}
+                      alt="QR Code - Scan to Register"
+                      className="w-full h-full object-contain"
+                      style={{
+                        imageRendering: "crisp-edges",
+                      }}
+                    />
+                  </div>
                 </div>
 
                 {/* CTA Text */}
-                <div className="text-center">
+                <div className="text-center mt-8">
                   <p
-                    className="text-xs uppercase tracking-widest font-semibold mb-2"
-                    style={{ color: "#9CA3AF" }}
+                    className="text-xs uppercase tracking-[0.2em] font-normal mb-3"
+                    style={{
+                      color: "rgba(192, 192, 192, 0.4)",
+                      fontFamily:
+                        "'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif",
+                    }}
                   >
-                    Scan or Click to Register
+                    Scan or tap to register
                   </p>
                   <p
-                    className="text-xl md:text-2xl font-bold flex items-center justify-center gap-2"
+                    className="text-lg font-medium flex items-center justify-center gap-3 group-hover:gap-4 transition-all duration-300"
                     style={{
-                      fontFamily: "'Space Grotesk', sans-serif",
-                      color: "#1F2937",
+                      background:
+                        "linear-gradient(180deg, #E8E8E8 0%, #B8B8B8 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                      fontFamily:
+                        "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+                      letterSpacing: "-0.01em",
                     }}
                   >
                     Join HACKFEST 2K26
-                    <span style={{ color: "#C9A227" }}>→</span>
+                    <span
+                      className="opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+                      style={{
+                        background:
+                          "linear-gradient(180deg, #D4AF37 0%, #C9A227 100%)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                      }}
+                    >
+                      →
+                    </span>
                   </p>
                 </div>
-              </div>
-            </motion.a>
-          </motion.div>
+              </motion.a>
+            </motion.div>
 
-          {/* Testimonials Section - Right Side */}
-          <motion.div
-            className="flex flex-col"
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            {/* Testimonials Header */}
-            <div className="mb-6">
-              <h3
-                className="text-xl md:text-2xl font-bold mb-2"
-                style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  color: "#1F2937",
-                }}
-              >
-                Hear from Participants
-              </h3>
-              <p className="text-sm" style={{ color: "#6B7280" }}>
-                Students who experienced HACKFEST
-              </p>
-            </div>
-
-            {/* Testimonials Grid - 2x2 compact */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {testimonials.map((testimonial, index) => (
-                <TestimonialCard
-                  key={index}
-                  testimonial={testimonial}
-                  index={index}
-                />
-              ))}
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Bottom CTA */}
-        <motion.div
-          className="text-center mt-16 md:mt-20"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <motion.a
-            href={qrUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-lg no-underline"
-            style={{
-              background: "linear-gradient(135deg, #1F2937 0%, #374151 100%)",
-              color: "#FFFFFF",
-              boxShadow: "0 4px 20px rgba(31, 41, 55, 0.25)",
-              fontFamily: "'Space Grotesk', sans-serif",
-            }}
-            whileHover={{
-              scale: 1.03,
-              boxShadow: "0 8px 32px rgba(31, 41, 55, 0.35)",
-            }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.2 }}
-          >
-            Register Now
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
+            {/* Jury Panel Section - 2x2 Grid */}
+            <motion.div
+              className="flex flex-col"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
             >
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </motion.a>
+              {/* Section Header */}
+              <div className="mb-8 text-center lg:text-left">
+                {/* Label - Gold */}
+                <span
+                  className="text-xs uppercase tracking-[0.2em] font-medium mb-3 block"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, #D4AF37 0%, #C9A227 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    fontFamily:
+                      "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+                  }}
+                >
+                  Jury Panel
+                </span>
 
-          <p className="mt-4 text-sm" style={{ color: "#9CA3AF" }}>
-            Limited spots available • Registration closes soon
-          </p>
-        </motion.div>
+                {/* Title - Silver gradient */}
+                <h3
+                  className="text-2xl md:text-3xl font-semibold mb-2"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, #FFFFFF 0%, #C0C0C0 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    fontFamily:
+                      "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  Expert Judges
+                </h3>
+                <p
+                  className="text-sm"
+                  style={{
+                    color: "rgba(192, 192, 192, 0.45)",
+                    fontFamily:
+                      "'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif",
+                    fontWeight: "400",
+                  }}
+                >
+                  Distinguished professionals evaluating your innovations
+                </p>
+              </div>
+
+              {/* Jury Grid - 2x2 */}
+              <div className="grid grid-cols-2 gap-5">
+                {juryMembers.map((jury, index) => (
+                  <JuryCard key={index} jury={jury} index={index} />
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
       </div>
 
-      {/* Subtle Gradient Accent at Top */}
+      {/* Ambient light effect - bottom */}
       <div
-        className="absolute top-0 left-0 right-0 h-px"
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-48 pointer-events-none"
         style={{
           background:
-            "linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.3), transparent)",
+            "radial-gradient(ellipse at center bottom, rgba(192, 192, 192, 0.02) 0%, transparent 70%)",
         }}
       />
     </section>

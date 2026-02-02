@@ -169,22 +169,26 @@ const TOTAL_EVENTS = timelineEvents.length;
 
 // Motivational quotes - one per timeline event in fixed sequential order
 const motivationalQuotes = [
-  { quote: "The journey of a thousand miles begins with a single step.", author: "Lao Tzu" },
-  { quote: "The best way to predict the future is to invent it.", author: "Alan Kay" },
-  { quote: "Stay hungry, stay foolish.", author: "Steve Jobs" },
-  { quote: "First, solve the problem. Then, write the code.", author: "John Johnson" },
-  { quote: "Code is poetry.", author: "WordPress" },
-  { quote: "Simplicity is the soul of efficiency.", author: "Austin Freeman" },
-  { quote: "Make it work, make it right, make it fast.", author: "Kent Beck" },
-  { quote: "Done is better than perfect.", author: "Sheryl Sandberg" },
-  { quote: "Rest, refuel, and recharge.", author: "HACKFEST" },
-  { quote: "The night is darkest just before the dawn.", author: "Harvey Dent" },
-  { quote: "I really liked the environment. The competition was strong.", author: "Sumit, SRM" },
+  { quote: "WORDS FROM THE PARTICIPANTS", author: "" },
   { quote: "MKCE College's hospitality was excellent.", author: "Keval, SRM" },
-  { quote: "The future belongs to those who believe in their dreams.", author: "Eleanor Roosevelt" },
-  { quote: "Every morning brings new potential.", author: "HACKFEST" },
-  { quote: "Build something people want.", author: "Y Combinator" },
-  { quote: "Innovation distinguishes between a leader and a follower.", author: "Steve Jobs" },
+  { quote: "I really liked the environment and good accomadation", author: "Sumit, SRM" },
+  { quote: "Juries helped to improve our project", author: "Student from KRCE" },
+  { quote: "Mentors helped to complete our task", author: "Asma, KRCE" },
+  { quote: "Excellent hall setup, reliable internet, and good food", author: "Anuraag Rai, MKCE" },
+  { quote: "Well organized, beginner-friendly, great environment and transparent judging.", author: "Prasadh, MKCE" },
+
+  { quote: "INSIGHTS FROM THE JURY PANEL", author: "" },
+  { quote: "Exceptional project quality and dedication across the event.", author: "Mr.K.Janarthanan Founder - Geniuscarte Edutainment" },
+  { quote: "Highly valuable in preparing students for real-world IT roles.", author: "Mr.Prabhu Krishnan, Technical Manager" },
+  
+  { quote: "Remarks from the Mentors", author: "" },
+  { quote: "Students showed strong problem-solving skills and consistent effort.", author: "Dr. JeyGanesh Kumar, MKCE" },
+  { quote: "Participants were highly engaged and open to feedback.", author: "Mr. M Jaganath, MKCE" },
+
+  { quote: "Hear directly from our coordinators", author: "" },
+  { quote: "Ensured excellent hospitality and well-organized scheduling.", author: "Muthuvel, MKCE" },
+  { quote: "Accommodation arrangements were carefully managed to ensure comfort and upkeep.", author: "Jayanthan, MKCE" },
+  
   { quote: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
   { quote: "Success is not final, failure is not fatal.", author: "Winston Churchill" },
   { quote: "Think different.", author: "Apple" },
